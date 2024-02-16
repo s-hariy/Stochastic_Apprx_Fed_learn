@@ -1,0 +1,21 @@
+import torch
+
+METHOD = "FedAvg"
+DATASET = "CIFAR10"
+SEED = 42
+NUM_CLIENTS = 10
+NUM_CLASSES = 10
+CLASSES_PER_CLIENT = 2
+SPLIT = "IID"
+BATCH_SIZE = 100 
+LR = 0.1
+DECAY_RATE = 0.992
+FRACTION_FIT = 1.0
+FRACTION_EVALUATE = 1.0
+MIN_FIT_CLIENTS = 5
+MIN_EVALUATE_CLIENTS = 5
+SERVER_ROUND = 2
+LOCAL_EPOCHS = 2
+DEVICE = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu") 
+FOLDER = f"{DATASET}/{str(NUM_CLIENTS)}_clients_{str(FRACTION_FIT)}_E_{LOCAL_EPOCHS}_R_{SERVER_ROUND}/{SPLIT}/class_per_client_{CLASSES_PER_CLIENT}/bs{str(BATCH_SIZE)}/lr_{str(LR)}/{METHOD}"
+
