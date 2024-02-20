@@ -70,6 +70,7 @@ def create_dir_non_iid_data(trainset,alpha,num_classes,num_clients,batch_size,se
     return trainloaders, valloaders, client_samples
 
 
+#CODE TAKEN FROM : https://github.com/MMorafah/FL-SC-NIID
 
 def CIFAR10_SuperClass_NIID_DIR(train_ds,alpha,num_classes,num_clients,batch_size,seed):
 
