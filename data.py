@@ -1,8 +1,8 @@
 import torch
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
-from torchvision.datasets import CIFAR10, CIFAR100, STL10,FashionMNIST
-from sampling import create_iid_data, create_non_iid_data,create_dir_non_iid_data,create_path_non_iid_data
+from torchvision.datasets import*
+from sampling import*
 import logging
 log = logging.getLogger(__name__)
 
@@ -71,12 +71,17 @@ def load_datasets(dataset: str, num_clients: int, batch_size: int, split: str, c
 
     if split == "IID":
         trainloaders,valloaders, client_samples = create_iid_data(trainset,num_clients,batch_size,seed)
-    elif split == "N-IID":
-        trainloaders,valloaders, client_samples = create_non_iid_data(trainset,num_classes,num_clients,class_per_client,batch_size,seed)
     elif split == "DIR-N-IID":
         trainloaders,valloaders, client_samples = create_dir_non_iid_data(trainset,alpha,num_classes,num_clients,batch_size,seed)
-    elif split == "P-N-IID":
-        trainloaders,valloaders, client_samples = create_path_non_iid_data(trainset,num_classes, classes_per_client, num_clients, batch_size, seed)
+    elif split == "SC-DIR-N-IID":
+        if dataset == "CIFAR10":
+            trainloaders,valloaders, client_samples = CIFAR10_SuperClass_NIID_DIR(trainset,alpha,num_classes,num_clients,batch_size,seed)
+        if dataset == "CIFAR100":
+            trainloaders,valloaders, client_samples = CIFAR100_SuperClass_NIID_DIR(trainset,alpha,num_classes,num_clients,batch_size,seed)
+        if dataset == "STL10":
+            trainloaders,valloaders, client_samples = STL10_SuperClass_NIID_DIR(trainset,alpha,num_classes,num_clients,batch_size,seed)
+        if dataset == "F-MNIST":
+            trainloaders,valloaders, client_samples = FMNIST_SuperClass_NIID_DIR(trainset,alpha,num_classes,num_clients,batch_size,seed)
 
     testloader = DataLoader(testset, batch_size=batch_size)
     return trainloaders, valloaders, testloader,client_samples,num_classes
